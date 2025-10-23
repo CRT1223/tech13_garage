@@ -405,6 +405,9 @@ def update_product_stock(product_id, quantity_change):
     conn.commit()
     conn.close()
 
+# Initialize database on app startup
+init_db()
+
 # Routes
 @app.route('/')
 def index():
