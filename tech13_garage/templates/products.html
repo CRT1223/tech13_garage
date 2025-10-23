@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}Products - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Filters</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Search -->
+                    <div class="mb-4">
+                        <h6>Search</h6>
+                        <form method="GET">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="search" placeholder="Search products..." value="{{ search_term or '' }}">
+                                <button class="btn btn-outline-primary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Product Type -->
+                    <div class="mb-4">
+                        <h6>Product Type</h6>
+                        <div class="list-group list-group-flush">
+                            <a href="{{ url_for('products') }}" class="list-group-item list-group-item-action {{ 'active' if not selected_type else '' }}">
+                                All Products
+                            </a>
+                            <a href="{{ url_for('products', type='racing') }}" class="list-group-item list-group-item-action {{ 'active' if selected_type == 'racing' else '' }}">
+                                <i class="fas fa-trophy me-2"></i>Racing Parts
+                            </a>
+                            <a href="{{ url_for('products', type='daily') }}" class="list-group-item list-group-item-action {{ 'active' if selected_type == 'daily' else '' }}">
+                                <i class="fas fa-road me-2"></i>Daily Parts
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Categories -->
+                    <div class="mb-4">
+                        <h6>Categories</h6>
+                        <div class="list-group list-group-flush">
+                            <a href="{{ url_for('products') }}" class="list-group-item list-group-item-action {{ 'active' if not selected_category else '' }}">
+                                All Categories
+                            </a>
+                            {% for category in categories %}
+                            <a href="{{ url_for('products', category=category.id) }}" class="list-group-item list-group-item-action {{ 'active' if selected_category == category.id|string else '' }}">
+                                {{ category.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Products Grid -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    {% if selected_type == 'racing' %}
+                        Racing Parts
+                    {% elif selected_type == 'daily' %}
+                        Daily Parts
+                    {% else %}
+                        All Products
+                    {% endif %}
+                </h2>
+                <span class="text-muted">{{ products|length }} products found</span>
+            </div>
+            
+            {% if products %}
+            <div class="row">
+                {% for product in products %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if product.image %}
+                        <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-motorcycle fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title">{{ product.name }}</h6>
+                            <p class="card-text text-muted small">{{ product.description[:100] }}...</p>
+                            <div class="mt-auto">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="h5 text-primary mb-0">₱{{ "%.2f"|format(product.price) }}</span>
+                                    <div>
+                                        {% if product.is_racing %}
+                                        <span class="badge bg-danger">Racing</span>
+                                        {% endif %}
+                                        {% if product.is_daily %}
+                                        <span class="badge bg-success">Daily</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2">
+                                    <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-outline-primary btn-sm flex-fill">View Details</a>
+                                    {% if session.user_id and session.role != 'admin' %}
+                                    <button class="btn btn-primary btn-sm" onclick="addToCart({{ product.id }}, 'product')">
+                                        <i class="fas fa-cart-plus"></i>
+                                    </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No products found</h4>
+                <p class="text-muted">Try adjusting your search or filter criteria</p>
+                <a href="{{ url_for('products') }}" class="btn btn-primary">View All Products</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function addToCart(itemId, itemType) {
+    $.ajax({
+        url: '{{ url_for("add_to_cart") }}',
+        method: 'POST',
+        data: {
+            [itemType + '_id']: itemId,
+            quantity: 1
+        },
+        success: function(response) {
+            if (response.success) {
+                // Show success message
+                const alert = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 100px; right: 20px; z-index: 9999;">' +
+                    response.message +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+                    '</div>');
+                $('body').append(alert);
+                
+                // Auto remove after 3 seconds
+                setTimeout(function() {
+                    alert.alert('close');
+                }, 3000);
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function() {
+            alert('Error adding item to cart');
+        }
+    });
+}
+</script>
+{% endblock %}

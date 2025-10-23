@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Customers - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-users me-2"></i>Manage Customers
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th>
+                                    <th>Joined</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for customer in customers %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ customer.first_name }} {{ customer.last_name }}</strong>
+                                    </td>
+                                    <td>{{ customer.username }}</td>
+                                    <td>{{ customer.email }}</td>
+                                    <td>{{ customer.phone or 'N/A' }}</td>
+                                    <td>
+                                        {% if customer.address %}
+                                        <small class="text-muted">{{ customer.address[:50] }}{% if customer.address|length > 50 %}...{% endif %}</small>
+                                        {% else %}
+                                        N/A
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ customer.created_at[:10] if customer.created_at else 'N/A' }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-sm btn-outline-primary" title="View Details" onclick="viewCustomer({{ customer.id }})">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-warning" title="Edit" onclick="editCustomer({{ customer.id }})">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function viewCustomer(customerId) {
+    // Add view customer functionality here
+    alert('View customer functionality not implemented yet');
+}
+
+function editCustomer(customerId) {
+    // Add edit customer functionality here
+    alert('Edit customer functionality not implemented yet');
+}
+</script>
+{% endblock %}

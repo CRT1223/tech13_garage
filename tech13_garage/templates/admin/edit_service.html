@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Service - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+    <div class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="admin-card fade-in">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-edit me-2"></i>Edit Service
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" class="admin-form">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">Service Name *</label>
+                                <input type="text" class="form-control" id="name" name="name" value="{{ service.name }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Price *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">₱</span>
+                                    <input type="number" class="form-control" id="price" name="price" step="0.01" min="0" value="{{ service.price }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description *</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" required>{{ service.description }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Service Image</label>
+                            {% if service.image %}
+                            <div class="mb-2">
+                                <img src="{{ url_for('static', filename='uploads/' + service.image) }}" alt="Current image" class="admin-thumbnail" id="current-image">
+                                <small class="text-muted d-block">Current image</small>
+                            </div>
+                            {% endif %}
+                            <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="previewImage(this)">
+                            <div class="form-text">Supported formats: PNG, JPG, JPEG, GIF, WEBP. Leave empty to keep current image.</div>
+                            
+                            <!-- Image Preview Container -->
+                            <div id="image-preview" class="mt-2" style="display: none;">
+                                <img id="preview-img" class="admin-thumbnail" alt="Preview">
+                                <small class="text-muted d-block">New image preview</small>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Service Type *</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="is_racing" name="is_racing" value="1" {% if service.is_racing %}checked{% endif %}>
+                                        <label class="form-check-label" for="is_racing">
+                                            <i class="fas fa-trophy me-1"></i>Racing Services
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="is_daily" name="is_daily" value="1" {% if service.is_daily %}checked{% endif %}>
+                                        <label class="form-check-label" for="is_daily">
+                                            <i class="fas fa-road me-1"></i>Daily Services
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('admin_services') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Services
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Update Service
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const previewContainer = document.getElementById('image-preview');
+            const previewImg = document.getElementById('preview-img');
+            
+            previewImg.src = e.target.result;
+            previewContainer.style.display = 'block';
+            
+            // Hide current image if exists
+            const currentImage = document.getElementById('current-image');
+            if (currentImage) {
+                currentImage.style.display = 'none';
+            }
+        }
+        
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// Reset preview when form is reset
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const fileInput = document.getElementById('image');
+    
+    form.addEventListener('reset', function() {
+        const previewContainer = document.getElementById('image-preview');
+        const currentImage = document.getElementById('current-image');
+        
+        previewContainer.style.display = 'none';
+        if (currentImage) {
+            currentImage.style.display = 'block';
+        }
+    });
+});
+</script>
+{% endblock %}

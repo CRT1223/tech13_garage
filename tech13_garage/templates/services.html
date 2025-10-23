@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Services - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Service Type</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group list-group-flush">
+                        <a href="{{ url_for('services') }}" class="list-group-item list-group-item-action {{ 'active' if not selected_type else '' }}">
+                            All Services
+                        </a>
+                        <a href="{{ url_for('services', type='racing') }}" class="list-group-item list-group-item-action {{ 'active' if selected_type == 'racing' else '' }}">
+                            <i class="fas fa-trophy me-2"></i>Racing Services
+                        </a>
+                        <a href="{{ url_for('services', type='daily') }}" class="list-group-item list-group-item-action {{ 'active' if selected_type == 'daily' else '' }}">
+                            <i class="fas fa-road me-2"></i>Daily Services
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Services Grid -->
+        <div class="col-md-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    {% if selected_type == 'racing' %}
+                        Racing Services
+                    {% elif selected_type == 'daily' %}
+                        Daily Services
+                    {% else %}
+                        All Services
+                    {% endif %}
+                </h2>
+                <span class="text-muted">{{ services|length }} services available</span>
+            </div>
+            
+            {% if services %}
+            <div class="row">
+                {% for service in services %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if service.image %}
+                        <img src="{{ url_for('static', filename='uploads/' + service.image) }}" class="card-img-top" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                        <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <i class="fas fa-wrench fa-3x text-muted"></i>
+                        </div>
+                        {% endif %}
+                        <div class="card-body text-center">
+                            <h5 class="card-title">{{ service.name }}</h5>
+                            <p class="card-text text-muted">{{ service.description }}</p>
+                            
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="h5 text-primary mb-0">₱{{ "%.2f"|format(service.price) }}</span>
+                                <div>
+                                    {% if service.is_racing %}
+                                    <span class="badge bg-danger">Racing</span>
+                                    {% endif %}
+                                    {% if service.is_daily %}
+                                    <span class="badge bg-success">Daily</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            
+                            {% if service.duration_hours %}
+                            <p class="text-muted small mb-3">
+                                <i class="fas fa-clock me-1"></i>
+                                Duration: {{ service.duration_hours }} hours
+                            </p>
+                            {% endif %}
+                            
+                            {% if session.user_id and session.role != 'admin' %}
+                            <button class="btn btn-primary w-100" onclick="addToCart({{ service.id }}, 'service')">
+                                <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                            </button>
+                            {% elif session.user_id and session.role == 'admin' %}
+                            <div class="alert alert-warning small mb-0">
+                                <i class="fas fa-user-shield me-1"></i>
+                                Admin account - Use customer account to book services
+                            </div>
+                            {% else %}
+                            <div class="alert alert-info small mb-0">
+                                <i class="fas fa-info-circle me-1"></i>
+                                <a href="{{ url_for('login') }}" class="alert-link">Login</a> to book services
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-wrench fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No services found</h4>
+                <p class="text-muted">Try selecting a different service type</p>
+                <a href="{{ url_for('services') }}" class="btn btn-primary">View All Services</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function addToCart(itemId, itemType) {
+    $.ajax({
+        url: '{{ url_for("add_to_cart") }}',
+        method: 'POST',
+        data: {
+            [itemType + '_id']: itemId,
+            quantity: 1
+        },
+        success: function(response) {
+            if (response.success) {
+                // Show success message
+                const alert = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 100px; right: 20px; z-index: 9999;">' +
+                    response.message +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+                    '</div>');
+                $('body').append(alert);
+                
+                // Auto remove after 3 seconds
+                setTimeout(function() {
+                    alert.alert('close');
+                }, 3000);
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function() {
+            alert('Error adding item to cart');
+        }
+    });
+}
+</script>
+{% endblock %}

@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">
+                        <i class="fas fa-credit-card me-2"></i>Checkout
+                    </h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.phone }}" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="delivery_address" class="form-label">Delivery Address</label>
+                            <textarea class="form-control" id="delivery_address" name="delivery_address" rows="3" required>{{ user.address }}</textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Order Notes (Optional)</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="2" placeholder="Any special instructions for your order..."></textarea>
+                        </div>
+                        
+                        <div class="d-flex gap-3">
+                            <a href="{{ url_for('cart') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Cart
+                            </a>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-check me-2"></i>Place Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="text-center mb-3">
+                        <i class="fas fa-motorcycle fa-3x text-primary"></i>
+                        <h6 class="mt-2">TECH13 GARAGE</h6>
+                        <small class="text-muted">Motorcycle Parts & Services</small>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <h6>Order Details</h6>
+                        <p class="text-muted small mb-1">
+                            <i class="fas fa-calendar me-1"></i>
+                            Order Date: Today
+                        </p>
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-truck me-1"></i>
+                            Estimated Delivery: 3-5 business days
+                        </p>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="mb-3">
+                        <h6>Payment Information</h6>
+                        <div class="alert alert-info small">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Payment will be collected upon delivery or pickup.
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h6>Contact Information</h6>
+                        <p class="text-muted small mb-1">
+                            <i class="fas fa-phone me-1"></i>
+                            +1 (555) 123-4567
+                        </p>
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-envelope me-1"></i>
+                            info@tech13garage.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

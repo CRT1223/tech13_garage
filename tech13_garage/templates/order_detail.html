@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Order {{ order.order_number }} - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="fas fa-receipt me-2"></i>Order Details
+                </h2>
+                <a href="{{ url_for('order_history') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Orders
+                </a>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Order Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Order Number</h6>
+                                    <p class="text-muted">{{ order.order_number }}</p>
+                                    
+                                    <h6>Order Date</h6>
+                                    <p class="text-muted">{{ order.order_date[:10] }}</p>
+                                    
+                                    <h6>Status</h6>
+                                    {% if order.status == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                    {% elif order.status == 'processing' %}
+                                    <span class="badge bg-info">Processing</span>
+                                    {% elif order.status == 'shipped' %}
+                                    <span class="badge bg-primary">Shipped</span>
+                                    {% elif order.status == 'delivered' %}
+                                    <span class="badge bg-success">Delivered</span>
+                                    {% elif order.status == 'cancelled' %}
+                                    <span class="badge bg-danger">Cancelled</span>
+                                    {% else %}
+                                    <span class="badge bg-secondary">{{ order.status.title() }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Delivery Address</h6>
+                                    <p class="text-muted">{{ order.delivery_address }}</p>
+                                    
+                                    <h6>Phone</h6>
+                                    <p class="text-muted">{{ order.phone }}</p>
+                                    
+                                    {% if order.notes %}
+                                    <h6>Order Notes</h6>
+                                    <p class="text-muted">{{ order.notes }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Order Items</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for item in order_items %}
+                            <div class="row align-items-center py-3 border-bottom">
+                                <div class="col-md-2">
+                                    {% if item.product_image %}
+                                    <img src="{{ url_for('static', filename='uploads/' + item.product_image) }}" class="img-fluid rounded" alt="{{ item.product_name or item.service_name }}">
+                                    {% else %}
+                                    <div class="bg-light d-flex align-items-center justify-content-center rounded" style="height: 60px;">
+                                        <i class="fas fa-{% if item.item_type == 'product' %}motorcycle{% else %}wrench{% endif %} fa-2x text-muted"></i>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <h6 class="mb-1">{{ item.product_name or item.service_name }}</h6>
+                                    <small class="text-muted">
+                                        {% if item.item_type == 'product' %}
+                                            Product
+                                        {% else %}
+                                            Service
+                                        {% endif %}
+                                    </small>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <span class="text-muted">Qty: {{ item.quantity }}</span>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <span class="fw-bold">${{ "%.2f"|format(item.price) }}</span>
+                                </div>
+                                
+                                <div class="col-md-2">
+                                    <span class="fw-bold">${{ "%.2f"|format(item.price * item.quantity) }}</span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="mb-0">Order Summary</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Subtotal:</span>
+                                <span>${{ "%.2f"|format(order.total_amount) }}</span>
+                            </div>
+                            
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Shipping:</span>
+                                <span class="text-success">Free</span>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="d-flex justify-content-between">
+                                <strong>Total:</strong>
+                                <strong>${{ "%.2f"|format(order.total_amount) }}</strong>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="text-center">
+                                <h6>Need Help?</h6>
+                                <p class="text-muted small mb-2">
+                                    <i class="fas fa-phone me-1"></i>
+                                    +1 (555) 123-4567
+                                </p>
+                                <p class="text-muted small mb-0">
+                                    <i class="fas fa-envelope me-1"></i>
+                                    info@tech13garage.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

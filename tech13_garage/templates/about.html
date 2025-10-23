@@ -1,0 +1,1133 @@
+{% extends "base.html" %}
+
+{% block title %}About Us - TECH13 Garage{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="about-hero">
+    <div class="container">
+        <div class="row align-items-center min-vh-50">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <h1 class="hero-title">About TECH13 Garage</h1>
+                    <p class="hero-subtitle">Your Premier Destination for Motorcycle Excellence</p>
+                    <p class="hero-description">
+                        Since our founding, TECH13 Garage has been at the forefront of motorcycle innovation, 
+                        providing cutting-edge parts and services for both racing enthusiasts and daily riders. 
+                        We combine technical expertise with passion to deliver unmatched quality and performance.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>500+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>1000+</h3>
+                            <p>Parts & Accessories</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>5+</h3>
+                            <p>Years Experience</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-image">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="TECH13 Garage" class="hero-logo">
+                    <div class="floating-elements">
+                        <div class="floating-icon">
+                            <i class="fas fa-cog"></i>
+                        </div>
+                        <div class="floating-icon">
+                            <i class="fas fa-wrench"></i>
+                        </div>
+                        <div class="floating-icon">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Section -->
+<section class="mission-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-description">
+                    To revolutionize the motorcycle industry by providing premium quality parts, 
+                    exceptional services, and unmatched customer support. We believe every rider 
+                    deserves the best, whether they're racing on the track or cruising the streets.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values Section -->
+<section class="values-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Our Core Values</h2>
+                <p class="section-description">The principles that guide everything we do</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4>Quality Excellence</h4>
+                    <p>We never compromise on quality. Every part and service meets the highest standards of performance and durability.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Customer First</h4>
+                    <p>Our customers are at the heart of everything we do. We listen, understand, and deliver solutions that exceed expectations.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4>Innovation</h4>
+                    <p>We continuously push boundaries, embracing new technologies and techniques to stay ahead of the curve.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Trust & Reliability</h4>
+                    <p>Building lasting relationships through consistent, dependable service and honest communication.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4>Performance</h4>
+                    <p>We understand the need for speed and precision. Every solution is designed to enhance your motorcycle's performance.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="value-card">
+                    <div class="value-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>Passion</h4>
+                    <p>Our love for motorcycles drives us to provide exceptional service and support to fellow enthusiasts.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">What We Offer</h2>
+                <p class="section-description">Comprehensive solutions for all your motorcycle needs</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-motorcycle"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>Racing Parts & Services</h4>
+                        <p>High-performance components and tuning services for competitive racing. From engine modifications to suspension upgrades, we help you achieve peak performance on the track.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> ECU Tuning & Remapping</li>
+                            <li><i class="fas fa-check"></i> Performance Exhaust Systems</li>
+                            <li><i class="fas fa-check"></i> Racing Suspension Setup</li>
+                            <li><i class="fas fa-check"></i> Engine Performance Modifications</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 mb-4">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-road"></i>
+                    </div>
+                    <div class="service-content">
+                        <h4>Daily Riding Solutions</h4>
+                        <p>Reliable parts and maintenance services for everyday riding. We ensure your motorcycle runs smoothly and safely for your daily commute and weekend adventures.</p>
+                        <ul class="service-features">
+                            <li><i class="fas fa-check"></i> Regular Maintenance Services</li>
+                            <li><i class="fas fa-check"></i> CVT Cleaning & Tuning</li>
+                            <li><i class="fas fa-check"></i> Brake System Overhaul</li>
+                            <li><i class="fas fa-check"></i> Oil Change & Filter Replacement</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team Section -->
+<section class="team-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Meet Our Team</h2>
+                <p class="section-description">The passionate professionals behind TECH13 Garage</p>
+                {% if session.user_id and session.role == 'admin' %}
+                <div class="admin-actions mt-3">
+                    <a href="{{ url_for('admin_team') }}" class="btn btn-outline-primary btn-sm me-2">
+                        <i class="fas fa-cog me-2"></i>Manage Team
+                    </a>
+                    <a href="{{ url_for('admin_add_team_member') }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-user-plus me-2"></i>Add Member
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            {% if team_members %}
+                {% for member in team_members %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="team-card">
+                        <div class="team-image">
+                            {% if member.image %}
+                                <img src="{{ url_for('static', filename='uploads/' + member.image) }}" alt="{{ member.name }}" class="team-photo" id="team-photo-{{ member.id }}">
+                            {% else %}
+                                <i class="fas fa-user"></i>
+                            {% endif %}
+                            {% if session.user_id and session.role == 'admin' %}
+                            <div class="team-image-overlay">
+                                <button class="btn btn-sm btn-light team-upload-btn" data-member-id="{{ member.id }}" title="Update Photo">
+                                    <i class="fas fa-camera"></i>
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="team-info">
+                            <h4>{{ member.name }}</h4>
+                            <p class="team-role">{{ member.role }}</p>
+                            <p class="team-description">{{ member.description }}</p>
+                            <div class="team-social">
+                                {% if member.linkedin_url %}
+                                <a href="{{ member.linkedin_url }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                                {% endif %}
+                                {% if member.twitter_url %}
+                                <a href="{{ member.twitter_url }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                                {% endif %}
+                                {% if member.instagram_url %}
+                                <a href="{{ member.instagram_url }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12 text-center">
+                    <div class="no-team-message">
+                        <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                        <h4>Meet Our Team</h4>
+                        <p class="text-muted">Our amazing team members will be displayed here soon!</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Our Partners Section -->
+{% if collaborate_teams %}
+<section class="partners-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h2 class="section-title">Our Partners</h2>
+                <p class="section-description">Trusted partners who work with us to deliver excellence</p>
+            </div>
+        </div>
+        <div class="row">
+            {% for team in collaborate_teams %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="partner-card">
+                    <div class="partner-logo">
+                        {% if team.logo %}
+                        <img src="{{ url_for('static', filename='uploads/' + team.logo) }}" alt="{{ team.team_name }}" class="partner-image">
+                        {% else %}
+                        <div class="partner-placeholder">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="partner-info">
+                        <h5 class="partner-name">{{ team.team_name }}</h5>
+                        <p class="partner-type">{{ team.partnership_type }}</p>
+                        {% if team.description %}
+                        <p class="partner-description">{{ team.description }}</p>
+                        {% endif %}
+                        {% if team.website_url %}
+                        <a href="{{ team.website_url }}" target="_blank" class="partner-website">
+                            <i class="fas fa-external-link-alt me-1"></i>Visit Website
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Contact CTA Section -->
+<section class="contact-cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="cta-title">Ready to Experience Excellence?</h2>
+                <p class="cta-description">
+                    Join hundreds of satisfied customers who trust TECH13 Garage for their motorcycle needs. 
+                    Whether you're a racing enthusiast or a daily rider, we're here to help you achieve your goals.
+                </p>
+                <div class="cta-buttons">
+                    <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg me-3">
+                        <i class="fas fa-shopping-cart me-2"></i>Shop Now
+                    </a>
+                    <a href="{{ url_for('services') }}" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-wrench me-2"></i>Our Services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Hero Section */
+.about-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 4rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="75" cy="75" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="50" cy="10" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="10" cy="60" r="0.5" fill="rgba(255,255,255,0.05)"/><circle cx="90" cy="40" r="0.5" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.min-vh-50 {
+    min-height: 50vh;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 2rem;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-item h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffd700;
+}
+
+.stat-item p {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin: 0;
+}
+
+.hero-image {
+    position: relative;
+    text-align: center;
+    animation: fadeInRight 0.8s ease-out 0.8s both;
+}
+
+.hero-logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+.floating-elements {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.floating-icon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    animation: float 3s ease-in-out infinite;
+}
+
+.floating-icon:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.floating-icon:nth-child(2) {
+    top: 60%;
+    right: 20%;
+    animation-delay: 1s;
+}
+
+.floating-icon:nth-child(3) {
+    bottom: 20%;
+    left: 20%;
+    animation-delay: 2s;
+}
+
+/* Mission Section */
+.mission-section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.section-description {
+    font-size: 1.2rem;
+    color: #718096;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Values Section */
+.values-section {
+    padding: 5rem 0;
+    background: white;
+}
+
+.value-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.value-card h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.value-card p {
+    color: #718096;
+    line-height: 1.6;
+}
+
+/* Services Section */
+.services-section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.service-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    color: white;
+}
+
+.service-content h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 1rem;
+}
+
+.service-content p {
+    color: #718096;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.service-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+}
+
+.service-features li i {
+    color: #38a169;
+    margin-right: 0.5rem;
+}
+
+/* Team Section */
+.team-section {
+    padding: 5rem 0;
+    background: white;
+}
+
+.team-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.team-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.team-image {
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    font-size: 3rem;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.team-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.team-card:hover .team-image-overlay {
+    opacity: 1;
+}
+
+.team-upload-btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.team-upload-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.team-upload-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.team-upload-btn.loading {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.team-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+.team-card:hover .team-photo {
+    transform: scale(1.05);
+}
+
+.no-team-message {
+    padding: 3rem 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px dashed #dee2e6;
+}
+
+.admin-actions {
+    margin-top: 1rem;
+}
+
+.admin-actions .btn {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.admin-actions .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.team-info h4 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+}
+
+.team-role {
+    color: #667eea;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.team-description {
+    color: #718096;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.team-social {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.team-social a {
+    width: 40px;
+    height: 40px;
+    background: #f7fafc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.team-social a:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Partners Section */
+.partners-section {
+    padding: 5rem 0;
+    background: #f8f9fa;
+}
+
+.partner-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.partner-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.partner-logo {
+    margin-bottom: 1.5rem;
+}
+
+.partner-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #667eea;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    display: block;
+}
+
+.partner-card:hover .partner-image {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.partner-placeholder {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2.5rem;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.partner-card:hover .partner-placeholder {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.partner-name {
+    color: #2d3748;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.partner-type {
+    color: #667eea;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.partner-description {
+    color: #718096;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+}
+
+.partner-website {
+    color: #667eea;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border: 2px solid #667eea;
+    border-radius: 25px;
+    margin-top: auto;
+}
+
+.partner-website:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive Design for Partners Section */
+@media (max-width: 768px) {
+    .partners-section {
+        padding: 3rem 0;
+    }
+    
+    .partner-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .partner-image,
+    .partner-placeholder {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .partner-placeholder {
+        font-size: 2rem;
+    }
+    
+    .partner-name {
+        font-size: 1.1rem;
+    }
+    
+    .partner-type {
+        font-size: 0.9rem;
+    }
+    
+    .partner-description {
+        font-size: 0.85rem;
+    }
+}
+
+/* Contact CTA Section */
+.contact-cta {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-outline-primary {
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline-primary:hover {
+    background: white;
+    color: #667eea;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .hero-logo {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .floating-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .cta-buttons .btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add event listeners for upload buttons
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadButtons = document.querySelectorAll('.team-upload-btn');
+    uploadButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const memberId = this.getAttribute('data-member-id');
+            quickImageUpdate(memberId);
+        });
+    });
+});
+
+function quickImageUpdate(memberId) {
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept = 'image/*';
+    fileInput.style.display = 'none';
+    
+    fileInput.onchange = function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file type
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+            if (!allowedTypes.includes(file.type)) {
+                showNotification('Please select a valid image file (JPEG, PNG, GIF, WEBP)', 'error');
+                return;
+            }
+            
+            // Validate file size (max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showNotification('File size must be less than 5MB', 'error');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            // Show loading state
+            const photoElement = document.getElementById(`team-photo-${memberId}`);
+            const uploadBtn = document.querySelector(`button[data-member-id="${memberId}"]`);
+            
+            if (photoElement) {
+                photoElement.style.opacity = '0.5';
+            }
+            
+            if (uploadBtn) {
+                uploadBtn.disabled = true;
+                uploadBtn.classList.add('loading');
+                uploadBtn.innerHTML = '<i class="fas fa-spinner"></i>';
+            }
+            
+            fetch(`/admin/team/${memberId}/update-image`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Update the image immediately
+                    if (photoElement) {
+                        photoElement.src = data.image_url;
+                        photoElement.style.opacity = '1';
+                    }
+                    
+                    showNotification(data.message, 'success');
+                } else {
+                    showNotification(data.message, 'error');
+                    if (photoElement) {
+                        photoElement.style.opacity = '1';
+                    }
+                }
+                
+                // Reset button state
+                if (uploadBtn) {
+                    uploadBtn.disabled = false;
+                    uploadBtn.classList.remove('loading');
+                    uploadBtn.innerHTML = '<i class="fas fa-camera"></i>';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error updating image', 'error');
+                if (photoElement) {
+                    photoElement.style.opacity = '1';
+                }
+                
+                // Reset button state
+                if (uploadBtn) {
+                    uploadBtn.disabled = false;
+                    uploadBtn.classList.remove('loading');
+                    uploadBtn.innerHTML = '<i class="fas fa-camera"></i>';
+                }
+            });
+        }
+    };
+    
+    document.body.appendChild(fileInput);
+    fileInput.click();
+    document.body.removeChild(fileInput);
+}
+
+function showNotification(message, type) {
+    // Create notification container if it doesn't exist
+    let container = document.getElementById('notification-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'notification-container';
+        container.className = 'position-fixed';
+        container.style.cssText = 'top: 20px; right: 20px; z-index: 9999;';
+        document.body.appendChild(container);
+    }
+    
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show`;
+    notification.style.cssText = 'margin-bottom: 10px; min-width: 300px;';
+    notification.innerHTML = `
+        <div class="d-flex align-items-center">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2"></i>
+            <span>${message}</span>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert"></button>
+        </div>
+    `;
+    
+    container.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.remove();
+        }
+    }, 5000);
+}
+</script>
+{% endblock %}

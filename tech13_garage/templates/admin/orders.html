@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Orders - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-shopping-cart me-2"></i>Manage Orders
+            </h2>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Email</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for order in orders %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ order.order_number }}</strong>
+                                    </td>
+                                    <td>{{ order.first_name }} {{ order.last_name }}</td>
+                                    <td>{{ order.email }}</td>
+                                    <td>{{ order.order_date[:10] }}</td>
+                                    <td>₱{{ "%.2f"|format(order.total_amount) }}</td>
+                                    <td>
+                                        <form method="POST" action="{{ url_for('admin_update_order_status', order_id=order.id) }}" class="d-inline">
+                                            <select name="status" class="form-select form-select-sm" onchange="this.form.submit()">
+                                                <option value="pending" {{ 'selected' if order.status == 'pending' else '' }}>Pending</option>
+                                                <option value="processing" {{ 'selected' if order.status == 'processing' else '' }}>Processing</option>
+                                                <option value="shipped" {{ 'selected' if order.status == 'shipped' else '' }}>Shipped</option>
+                                                <option value="delivered" {{ 'selected' if order.status == 'delivered' else '' }}>Delivered</option>
+                                                <option value="cancelled" {{ 'selected' if order.status == 'cancelled' else '' }}>Cancelled</option>
+                                            </select>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <a href="{{ url_for('order_detail', order_id=order.id) }}" class="btn btn-sm btn-outline-primary" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

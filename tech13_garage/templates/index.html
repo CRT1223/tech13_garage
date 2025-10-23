@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}TECH13 Garage - Motorcycle Parts & Services{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">TECH13 GARAGE</h1>
+                <p class="lead mb-4">Premium motorcycle parts and services for racing and daily use. From high-performance racing components to reliable daily riding essentials.</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('products', type='racing') }}" class="btn btn-warning btn-lg">
+                        <i class="fas fa-trophy me-2"></i>Racing Parts
+                    </a>
+                    <a href="{{ url_for('products', type='daily') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-road me-2"></i>Daily Parts
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="hero-logo-container">
+                    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="TECH13 GARAGE" class="hero-logo">
+                    <div class="logo-glow"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Awards Section -->
+{% if awards %}
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title fade-in">Awards We've Won</h2>
+        <p class="text-center text-muted mb-5">Recognition for excellence in motorcycle racing and service</p>
+        <div class="row">
+            {% for award in awards %}
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="award-card fade-in">
+                    <div class="award-image">
+                        {% if award.image %}
+                        <img src="{{ url_for('static', filename='uploads/' + award.image) }}" alt="{{ award.title }}" class="img-fluid">
+                        {% else %}
+                        <div class="award-placeholder">
+                            <i class="fas fa-trophy fa-3x"></i>
+                        </div>
+                        {% endif %}
+                        <div class="award-overlay">
+                            <div class="award-content">
+                                <h5>{{ award.title }}</h5>
+                                <p>{{ award.subtitle or award.description }}</p>
+                                {% if award.year %}
+                                <small class="award-year">{{ award.year }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Featured Products Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title fade-in">Featured Products</h2>
+        <div class="row">
+            {% for product in featured_products %}
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm fade-in">
+                    {% if product.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + product.image) }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-motorcycle fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title">{{ product.name }}</h6>
+                        <p class="card-text text-muted small">{{ product.description[:100] }}...</p>
+                        <div class="mt-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="h5 text-primary mb-0">₱{{ "%.2f"|format(product.price) }}</span>
+                                <div>
+                                    {% if product.is_racing %}
+                                    <span class="badge bg-danger">Racing</span>
+                                    {% endif %}
+                                    {% if product.is_daily %}
+                                    <span class="badge bg-success">Daily</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('product_detail', product_id=product.id) }}" class="btn btn-outline-primary btn-sm flex-fill">View Details</a>
+                                {% if session.user_id and session.role != 'admin' %}
+                                <button class="btn btn-primary btn-sm add-to-cart-btn" data-item-id="{{ product.id }}" data-item-type="product">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('products') }}" class="btn btn-primary btn-lg">View All Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title fade-in">Our Services</h2>
+        <div class="row">
+            {% for service in services[:6] %}
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 shadow-sm fade-in">
+                    {% if service.image %}
+                    <img src="{{ url_for('static', filename='uploads/' + service.image) }}" class="card-img-top" alt="{{ service.name }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-wrench fa-3x text-muted"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body text-center">
+                        <h5 class="card-title">{{ service.name }}</h5>
+                        <p class="card-text text-muted">{{ service.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="h5 text-primary mb-0">₱{{ "%.2f"|format(service.price) }}</span>
+                            <div>
+                                {% if service.is_racing %}
+                                <span class="badge bg-danger">Racing</span>
+                                {% endif %}
+                                {% if service.is_daily %}
+                                <span class="badge bg-success">Daily</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% if session.user_id and session.role != 'admin' %}
+                        <button class="btn btn-primary mt-3 add-to-cart-btn" data-item-id="{{ service.id }}" data-item-type="service">
+                            <i class="fas fa-cart-plus me-2"></i>Add to Cart
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{{ url_for('services') }}" class="btn btn-primary btn-lg">View All Services</a>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5 section-title fade-in">Why Choose TECH13 Garage?</h2>
+        <div class="row">
+            <div class="col-md-4 text-center mb-4 fade-in">
+                <i class="fas fa-award fa-3x text-primary mb-3"></i>
+                <h5>Premium Quality</h5>
+                <p class="text-muted">Only the highest quality parts from trusted manufacturers for both racing and daily use.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4 fade-in">
+                <i class="fas fa-tools fa-3x text-primary mb-3"></i>
+                <h5>Expert Service</h5>
+                <p class="text-muted">Professional mechanics with years of experience in motorcycle maintenance and racing preparation.</p>
+            </div>
+            <div class="col-md-4 text-center mb-4 fade-in">
+                <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                <h5>Fast Delivery</h5>
+                <p class="text-muted">Quick and reliable shipping to get your parts and services when you need them.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Awards Section Styles */
+.award-card {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 250px;
+}
+
+.award-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.award-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.award-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.award-card:hover .award-image img {
+    transform: scale(1.1);
+}
+
+.award-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+}
+
+.award-card:hover .award-overlay {
+    opacity: 1;
+}
+
+.award-content {
+    text-align: center;
+    color: white;
+}
+
+.award-content h5 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.award-content p {
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 0.9;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.award-year {
+    display: block;
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-top: 0.5rem;
+    font-weight: 500;
+}
+
+.award-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+/* Responsive Design for Awards */
+@media (max-width: 768px) {
+    .award-card {
+        height: 200px;
+    }
+    
+    .award-content h5 {
+        font-size: 1rem;
+    }
+    
+    .award-content p {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .award-card {
+        height: 180px;
+    }
+    
+    .award-content h5 {
+        font-size: 0.9rem;
+    }
+    
+    .award-content p {
+        font-size: 0.75rem;
+    }
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add event listeners when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.getAttribute('data-item-id');
+            const itemType = this.getAttribute('data-item-type');
+            addToCart(itemId, itemType);
+        });
+    });
+});
+
+function addToCart(itemId, itemType) {
+    $.ajax({
+        url: '{{ url_for("add_to_cart") }}',
+        method: 'POST',
+        data: {
+            [itemType + '_id']: itemId,
+            quantity: 1
+        },
+        success: function(response) {
+            if (response.success) {
+                // Show success message
+                const alert = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 100px; right: 20px; z-index: 9999;">' +
+                    response.message +
+                    '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+                    '</div>');
+                $('body').append(alert);
+                
+                // Auto remove after 3 seconds
+                setTimeout(function() {
+                    alert.alert('close');
+                }, 3000);
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function() {
+            alert('Error adding item to cart');
+        }
+    });
+}
+</script>
+{% endblock %}

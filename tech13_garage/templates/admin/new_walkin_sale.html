@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+
+{% block title %}New Walk-in Sale - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="fas fa-cash-register me-2"></i>New Walk-in Sale
+                </h2>
+                <a href="{{ url_for('admin_walkin_sales') }}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Sales
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <form method="POST" id="walkinSaleForm">
+        <div class="row">
+            <!-- Customer Information -->
+            <div class="col-md-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Customer Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="customer_name" class="form-label">Customer Name *</label>
+                            <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="customer_phone" class="form-label">Phone Number</label>
+                            <input type="tel" class="form-control" id="customer_phone" name="customer_phone">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="payment_method" class="form-label">Payment Method *</label>
+                            <select class="form-select" id="payment_method" name="payment_method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="cash">Cash</option>
+                                <option value="card">Card</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Selection -->
+            <div class="col-md-8">
+                <div class="card shadow mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Select Products</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Stock</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    {% for product in products %}
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input product-checkbox" type="checkbox" 
+                                                       id="product_{{ product.id }}" 
+                                                       data-product-id="{{ product.id }}"
+                                                       data-product-name="{{ product.name }}"
+                                                       data-product-price="{{ product.price }}"
+                                                       data-product-stock="{{ product.stock_quantity }}">
+                                                <label class="form-check-label" for="product_{{ product.id }}">
+                                                    {{ product.name }}
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td>{{ product.brand or 'N/A' }}</td>
+                                        <td>₱{{ "%.2f"|format(product.price) }}</td>
+                                        <td>
+                                            {% if product.stock_quantity > 0 %}
+                                            <span class="badge bg-success">{{ product.stock_quantity }}</span>
+                                            {% else %}
+                                            <span class="badge bg-danger">Out of Stock</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <input type="number" class="form-control quantity-input" 
+                                                   id="qty_{{ product.id }}" 
+                                                   min="0" 
+                                                   max="{{ product.stock_quantity }}" 
+                                                   value="0" 
+                                                   disabled
+                                                   data-product-id="{{ product.id }}">
+                                        </td>
+                                        <td>
+                                            <span class="item-total" id="total_{{ product.id }}">₱0.00</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sale Summary -->
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="mb-0">Sale Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Selected Items:</h6>
+                                <div id="selectedItems">
+                                    <p class="text-muted">No items selected</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <strong>Total Amount:</strong>
+                                    <strong id="grandTotal">₱0.00</strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success btn-lg" id="processSaleBtn" disabled>
+                                <i class="fas fa-cash-register me-2"></i>Process Sale
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let selectedProducts = {};
+let grandTotal = 0;
+
+$(document).ready(function() {
+    // Handle product checkbox changes
+    $('.product-checkbox').on('change', function() {
+        const productId = $(this).data('product-id');
+        const quantityInput = $(`#qty_${productId}`);
+        
+        if ($(this).is(':checked')) {
+            quantityInput.prop('disabled', false).val(1);
+            selectedProducts[productId] = {
+                name: $(this).data('product-name'),
+                price: parseFloat($(this).data('product-price')),
+                quantity: 1,
+                stock: parseInt($(this).data('product-stock'))
+            };
+        } else {
+            quantityInput.prop('disabled', true).val(0);
+            delete selectedProducts[productId];
+        }
+        
+        updateTotals();
+    });
+    
+    // Handle quantity changes
+    $('.quantity-input').on('input', function() {
+        const productId = $(this).data('product-id');
+        const quantity = parseInt($(this).val()) || 0;
+        
+        if (selectedProducts[productId]) {
+            selectedProducts[productId].quantity = quantity;
+            updateTotals();
+        }
+    });
+    
+    function updateTotals() {
+        grandTotal = 0;
+        let selectedItemsHtml = '';
+        
+        // Update individual item totals
+        Object.keys(selectedProducts).forEach(productId => {
+            const product = selectedProducts[productId];
+            const itemTotal = product.price * product.quantity;
+            grandTotal += itemTotal;
+            
+            $(`#total_${productId}`).text(`₱${itemTotal.toFixed(2)}`);
+            
+            if (product.quantity > 0) {
+                selectedItemsHtml += `
+                    <div class="d-flex justify-content-between">
+                        <span>${product.name} x${product.quantity}</span>
+                        <span>$${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+            }
+        });
+        
+        // Update selected items display
+        if (selectedItemsHtml) {
+            $('#selectedItems').html(selectedItemsHtml);
+        } else {
+            $('#selectedItems').html('<p class="text-muted">No items selected</p>');
+        }
+        
+        // Update grand total
+        $('#grandTotal').text(`₱${grandTotal.toFixed(2)}`);
+        
+        // Enable/disable process button
+        $('#processSaleBtn').prop('disabled', grandTotal <= 0);
+        
+        // Update form data for submission
+        updateFormData();
+    }
+    
+    function updateFormData() {
+        // Clear existing hidden inputs
+        $('input[name="product_id"]').remove();
+        $('input[name="quantity"]').remove();
+        
+        // Add selected products to form
+        Object.keys(selectedProducts).forEach(productId => {
+            const product = selectedProducts[productId];
+            if (product.quantity > 0) {
+                $('#walkinSaleForm').append(`<input type="hidden" name="product_id" value="${productId}">`);
+                $('#walkinSaleForm').append(`<input type="hidden" name="quantity" value="${product.quantity}">`);
+            }
+        });
+    }
+    
+    // Form validation
+    $('#walkinSaleForm').on('submit', function(e) {
+        if (grandTotal <= 0) {
+            e.preventDefault();
+            alert('Please select at least one product with quantity > 0');
+            return false;
+        }
+        
+        if (!document.getElementById('customer_name').value.trim()) {
+            e.preventDefault();
+            alert('Please enter customer name');
+            return false;
+        }
+        
+        if (!document.getElementById('payment_method').value) {
+            e.preventDefault();
+            alert('Please select payment method');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %}

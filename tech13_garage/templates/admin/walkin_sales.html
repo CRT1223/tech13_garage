@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block title %}Walk-in Sales - TECH13 Garage{% endblock %}
+
+{% block main_class %}pt-5{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>
+                    <i class="fas fa-cash-register me-2"></i>Walk-in Sales
+                </h2>
+                <a href="{{ url_for('admin_new_walkin_sale') }}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i>New Walk-in Sale
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Sale Number</th>
+                                    <th>Customer</th>
+                                    <th>Phone</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                    <th>Processed By</th>
+                                    <th>Notes</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for sale in walkin_sales %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ sale.sale_number }}</strong>
+                                    </td>
+                                    <td>{{ sale.customer_name }}</td>
+                                    <td>{{ sale.customer_phone or 'N/A' }}</td>
+                                    <td>{{ sale.sale_date[:10] }}</td>
+                                    <td>₱{{ "%.2f"|format(sale.total_amount) }}</td>
+                                    <td>
+                                        {% if sale.payment_method == 'cash' %}
+                                        <span class="badge bg-success">Cash</span>
+                                        {% elif sale.payment_method == 'card' %}
+                                        <span class="badge bg-primary">Card</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">{{ sale.payment_method.title() }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if sale.first_name %}
+                                        {{ sale.first_name }} {{ sale.last_name }}
+                                        {% else %}
+                                        Unknown
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <small class="text-muted">{{ sale.notes or 'N/A' }}</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-primary" onclick="viewSaleDetails({{ sale.id }})" title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Sale Details Modal -->
+<div class="modal fade" id="saleDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Sale Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="saleDetailsContent">
+                    <!-- Sale details will be loaded here -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function viewSaleDetails(saleId) {
+    // This would typically make an AJAX call to get sale details
+    // For now, we'll show a placeholder
+    document.getElementById('saleDetailsContent').innerHTML = `
+        <div class="text-center py-4">
+            <i class="fas fa-receipt fa-3x text-muted mb-3"></i>
+            <h5>Sale Details</h5>
+            <p class="text-muted">Detailed sale information will be loaded here</p>
+        </div>
+    `;
+    
+    const modal = new bootstrap.Modal(document.getElementById('saleDetailsModal'));
+    modal.show();
+}
+</script>
+{% endblock %}
